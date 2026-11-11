@@ -3016,9 +3016,15 @@ static int apple_dart_probe(struct platform_device *pdev)
 			 * the configuration lock, which has to be written after
 			 * the translation context is programmed, so leave them
 			 * off until that ordering exists.
+			 *
+			 * The t8112 PCIe-C DARTs are T8110 too, but the t8112
+			 * ADT publishes no tunables for them (no
+			 * dart-tunables-instance-0, unlike T600x/T602x), so run
+			 * them without.
 			 */
 			if (PTR_ERR(dart->tunables) == -ENOENT &&
-			    dart->hw->type != DART_T8110) {
+			    (dart->hw->type != DART_T8110 ||
+			     of_machine_is_compatible("apple,t8112"))) {
 				dart->tunables = NULL;
 			} else {
 				return dev_err_probe(dev, PTR_ERR(dart->tunables),
