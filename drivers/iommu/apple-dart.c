@@ -3076,6 +3076,16 @@ static int apple_dart_probe(struct platform_device *pdev)
 			dart->oas = DART_PCIEC_ADDR_WIDTH;
 			dart->num_streams = DART_PCIEC_STREAMS;
 			dart->four_level = true;
+			/*
+			 * t8112's PCIe-C DART (ADT dart-apciecN: vm-base 0,
+			 * vm-size 4 GiB) is a 32-bit IOVA space, walked with
+			 * the usual three levels like the SoC's other T8110
+			 * DARTs (four_level is only used above 36 bits).
+			 */
+			if (of_machine_is_compatible("apple,t8112")) {
+				dart->ias = 32;
+				dart->four_level = false;
+			}
 		} else {
 			dart->pgsize = 1 << DART_PCIEC_PAGE_SHIFT;
 			dart->supports_bypass = false;
