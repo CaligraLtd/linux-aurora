@@ -2031,13 +2031,16 @@
 					<0x3 0xa0004000 0x0 0x4000>,
 					<0x3 0xa0200000 0x0 0x4000>,
 					<0x3 0xa1010000 0x0 0x4000>,
-					<0x3 0xa100c000 0x0 0x4000>;
+					<0x3 0xa100c000 0x0 0x4000>,
+					<0x3 0xa0008000 0x0 0x4000>;
 				reg-names = "config", "rc", "port0", "fabric",
-					    "debug", "ltssm", "intr2axi";
+					    "debug", "ltssm", "intr2axi", "oe-fabric";
+#include "t8112-pciec-kernel-init.dtsi"
 
 				interrupt-parent = <&aic>;
 				interrupts = <AIC_IRQ 1024 IRQ_TYPE_LEVEL_HIGH>;
 				power-domains = <&ps_atc0_pcie>;
+				resets = <&ps_atc0_pcie>;
 
 				msi-controller;
 				msi-parent = <&apciec0>;
@@ -2251,13 +2254,16 @@
 					<0x5 0x20004000 0x0 0x4000>,
 					<0x5 0x20200000 0x0 0x4000>,
 					<0x5 0x21010000 0x0 0x4000>,
-					<0x5 0x2100c000 0x0 0x4000>;
+					<0x5 0x2100c000 0x0 0x4000>,
+					<0x5 0x20008000 0x0 0x4000>;
 				reg-names = "config", "rc", "port0", "fabric",
-					    "debug", "ltssm", "intr2axi";
+					    "debug", "ltssm", "intr2axi", "oe-fabric";
+#include "t8112-pciec-kernel-init.dtsi"
 
 				interrupt-parent = <&aic>;
 				interrupts = <AIC_IRQ 1105 IRQ_TYPE_LEVEL_HIGH>;
 				power-domains = <&ps_atc1_pcie>;
+				resets = <&ps_atc1_pcie>;
 
 				msi-controller;
 				msi-parent = <&apciec1>;

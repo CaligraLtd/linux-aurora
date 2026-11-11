@@ -1,0 +1,25 @@
+// SPDX-License-Identifier: GPL-2.0+ OR MIT
+/*
+ * t8112 Thunderbolt PCIe (PCIe-C): let the kernel cold-initialize the port,
+ * as on t8103. Included in each apciec node, which must also list the
+ * "oe-fabric" region.
+ *
+ * The t8112 ADT puts each port's oe-fabric window where t8103 has it (the
+ * last reg of apciecN-piodma: 0x3a0008000, 0x520008000), and its
+ * atc-apcie-oe-fabric-tunables are identical to t8103's, on both ports.
+ * The rc, fabric and debug tunables come from m1n1; t8112's fabric tunables
+ * differ from t8103's at 0x18, so t8103-pciec-tunables.dtsi is not reused.
+ * Offsets are relative to the oe-fabric region.
+ */
+apple,pciec-kernel-init;
+apple,tunable-oe-fabric =
+	<0x4 0x70007 0x40004>,
+	<0x8 0x1 0x1>,
+	<0xc 0x1 0x1>,
+	<0x10 0x801f 0x4>,
+	<0x18 0x7f007f 0x450045>,
+	<0x1c 0x801f 0x4>,
+	<0x24 0x801f 0x4>,
+	<0x2c 0x1 0x1>,
+	<0x30 0x1 0x1>,
+	<0x34 0x801f 0x4>;
